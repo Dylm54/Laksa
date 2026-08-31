@@ -47,15 +47,23 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
+  const baseProtectedPaths = ["/protected", "/checkout", "/mulai-jual"];
+  const sellerProtectedPaths = ["/seller/dashboard", "/seller/order", "/seller/produk",]
+
+  const isBaseProtected = baseProtectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
+  const isSellerProtected = sellerProtectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
+
   if (
-    request.nextUrl.pathname !== "/" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
+    (isBaseProtected || isSellerProtected) &&
+    !user //&&
+    // !request.nextUrl.pathname.startsWith("/login") &&
+    // !request.nextUrl.pathname.startsWith("/auth")
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
+    const redirectTo = request.nextUrl.pathname + request.nextUrl.search
     url.pathname = "/auth/login";
+    url.searchParams.set("redirectTo", redirectTo)
     return NextResponse.redirect(url);
   }
 
@@ -71,6 +79,26 @@ export async function updateSession(request: NextRequest) {
   //    return myNewResponse
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
+  let hasUsername = false;
+
+if (user) {
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("username")
+    .eq("id", user.sub) // Pada claims JWT Supabase, ID user biasanya disimpan di property 'sub'
+    .single();
+
+  // Jika data profile ditemukan dan kolom username tidak kosong
+  if (profileData?.username) {
+    hasUsername = true;
+  }
+}
+
+  if (isSellerProtected && user && !hasUsername) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/mulai-jual'
+    return NextResponse.redirect(url);
+  }
 
   return supabaseResponse;
 }

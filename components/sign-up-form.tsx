@@ -13,13 +13,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
+import SocialButton from "./social-button";
+import Separator from "./separator";
+
+interface SignUpFormProps extends React.ComponentPropsWithoutRef<"div"> {
+  redirectTo?: string
+}
 
 export function SignUpForm({
   className,
+  redirectTo = "/",
   ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+}: SignUpFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -58,12 +65,18 @@ export function SignUpForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
+      <Card className="ring-0 shadow-none bg-[#F4F4F0]">
         <CardHeader>
           <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>Create a new account</CardDescription>
         </CardHeader>
         <CardContent>
+          <SocialButton redirectTo={redirectTo}/>
+          <div className="flex items-center my-3 gap-4">
+            <hr className="w-full" />
+            <div className="text-[#737373]">or</div>
+            <hr className="w-full" />
+          </div>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
@@ -75,6 +88,7 @@ export function SignUpForm({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className="rounded-sm border-black bg-white"
                 />
               </div>
               <div className="grid gap-2">
@@ -87,6 +101,7 @@ export function SignUpForm({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  className="rounded-sm border-black bg-white"
                 />
               </div>
               <div className="grid gap-2">
@@ -99,10 +114,11 @@ export function SignUpForm({
                   required
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
+                  className="rounded-sm border-black bg-white"
                 />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button type="submit" className="w-full rounded-sm border-black neo-hover hover:text-black hover:!bg-[#F790E8]" disabled={isLoading}>
                 {isLoading ? "Creating an account..." : "Sign up"}
               </Button>
             </div>
