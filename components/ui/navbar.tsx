@@ -20,7 +20,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
   return (
     <nav className={clsx("fixed top-0 z-40 w-full flex justify-center border-b-1 border-b-black h-20 bg-[#F4F4F0]", {
       "!bg-white !border-b-2" : pathname === "/",
-      "!hidden" : pathname.startsWith("/seller/dashboard")
+      "!hidden" : pathname.startsWith("/seller/dashboard") || pathname.startsWith("/landing") 
     })}>
       <div className="w-full flex justify-between items-center p-3 px-5 text-sm">
         <div className="flex gap-5 items-center font-semibold mr-4">
