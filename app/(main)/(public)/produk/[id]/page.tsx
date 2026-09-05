@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { formatRupiah } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Page({
   params,
@@ -18,6 +19,12 @@ export default async function Page({
   const id = parameter.id;
   const product = await getProductById(id);
   console.log(`detail product: ${product?.profiles}`);
+
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!product) {
     notFound();
@@ -63,9 +70,17 @@ export default async function Page({
                 </p>
               </div>
               <p className="font-normal font-black text-2xl py-4 mb-4 border-y-1 border-black">{`${formatRupiah(product.price_idr ?? 0)}`}</p>
-              <Link href={`/checkout/${id}`} className="text-md text-center bg-pink neo-hover neo-hover-lg border border-black hover:!bg-[#F790E8] text-black rounded-sm cursor-pointer py-3">
+              {user?.id === product.seller_id && (
+                <Link href={`/seller/dashboard/produk/edit-produk/${product.id}`} className="text-md text-center bg-pink neo-hover neo-hover-lg border border-black hover:!bg-[#F790E8] text-black rounded-sm cursor-pointer py-3">
+                Edit
+              </Link>
+              )}
+              {user?.id !== product.seller_id && (
+                <Link href={`/checkout/${id}`} className="text-md text-center bg-pink neo-hover neo-hover-lg border border-black hover:!bg-[#F790E8] text-black rounded-sm cursor-pointer py-3">
                 Beli sekarang
               </Link>
+              )}
+              
             </Suspense>
           </div>
         </section>

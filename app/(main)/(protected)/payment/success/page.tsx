@@ -33,7 +33,7 @@ export default function PaymentSuccessPage({
         )}
         <div className="flex flex-col gap-2 mx-4 justify-center items-center my-4">
         <Link
-          href="/purchases"
+          href="/pembelian-saya"
           className="block w-full bg-pink text-black border border-black neo-hover py-3 rounded-sm hover:bg-neutral-800 mb-3"
         >
           Lihat pembelian saya

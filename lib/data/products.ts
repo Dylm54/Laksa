@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import type { ProductWithCategory, ProductWithSeller } from '@/lib/types'
+import type { ProductWithCategory, ProductWithSeller, ProductFile } from '@/lib/types'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 // Fetch semua produk published (untuk katalog)
@@ -185,6 +185,32 @@ export async function addProduct(title: string, slug: string, description: strin
   return data as ProductWithCategory
 }
 
+export async function updateProduct(id: string, title: string, slug: string, description: string, category_id: string, price_idr: number, price_usd: number) {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return {} as ProductWithCategory
+
+  const { error } = await supabase
+  .from('products')
+  .update({ 
+    title: title,
+    slug: slug,
+    description: description,
+    price_idr: price_idr,
+    price_usd: price_usd,
+    category_id: category_id
+  })
+  .eq('id', id)
+  .select(`
+    *,
+    categories (name, slug)
+  `)
+  .single()
+
+  if (error) throw new Error(error.message)
+}
+
 export async function updateCoverProduct(cover: string, id_product: string) {
   const supabase = await createClient()
 
@@ -196,7 +222,7 @@ export async function updateCoverProduct(cover: string, id_product: string) {
   if (error) throw new Error(error.message)
 }
 
-export async function addProductFile(product_id: string, path: string, filename: string, filesize: number) {
+export async function addProductFile(product_id: string, path: string, filename: string, filesize: number, filetype: string) {
   const supabase = await createClient()
 
   const { error } = await supabase
@@ -205,8 +231,25 @@ export async function addProductFile(product_id: string, path: string, filename:
     product_id: product_id,
     storage_path: path,
     filename: filename,
-    file_size: filesize
+    file_size: filesize,
+    file_type: filetype
   })
+
+  if (error) throw new Error(error.message)
+}
+
+export async function updateProductFile(product_id: string, path: string, filename: string, filesize: number, filetype: string) {
+  const supabase = await createClient()
+
+  const { error } = await supabase
+  .from('product_files')
+  .update({ 
+    storage_path: path,
+    filename: filename,
+    file_size: filesize,
+    file_type: filetype
+  })
+  .eq('product_id', product_id)
 
   if (error) throw new Error(error.message)
 }
@@ -222,4 +265,20 @@ export async function updatePublishProduct(product_id: string) {
     .eq('id', product_id)
 
     if (error) throw new Error(error.message)
+}
+
+export async function getProductFile(product_id: string): Promise<ProductFile | null> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+  .from('product_files')
+  .select(`
+    *
+  `)
+  .eq('product_id', product_id)
+  .maybeSingle()
+
+  if (error) throw new Error(error.message)
+
+  return data as ProductFile | null
 }

@@ -4,11 +4,24 @@ import { ChangeEvent, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Trash2, FileText, CloudDownload } from "lucide-react";
 
-export default function FileInput() {
-  const [fileName, setFileName] = useState<string>("Belum ada file");
-  const [fileType, setFileType] = useState<string>("");
-  const [fileSize, setFileSize] = useState<number>(0);
-  const [isFileSelected, setIsFileSelected] = useState<boolean>(false);
+interface FileData {
+  name: string;
+  type?: string;
+  size?: number; 
+  url?: string;
+}
+
+interface FileInputProps {
+  action?: "add" | "edit";
+  initialData?: FileData;
+}
+
+export default function FileInput({ action = "add", initialData }: FileInputProps) {
+  const isEditModeWithData = action === "edit" && Boolean(initialData);
+  const [fileName, setFileName] = useState<string>(isEditModeWithData && initialData?.name ? initialData.name : "Belum ada file");
+  const [fileType, setFileType] = useState<string>(isEditModeWithData && initialData?.type ? initialData.type : "");
+  const [fileSize, setFileSize] = useState<number>(isEditModeWithData && initialData?.size ? initialData.size : 0);
+  const [isFileSelected, setIsFileSelected] = useState<boolean>(isEditModeWithData);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -50,7 +63,7 @@ export default function FileInput() {
         id="html-file-input"
         className="hidden"
         onChange={handleFileChange}
-        required
+        required={action === "add" ? true : false}
       />
       {!isFileSelected && (
         <Button

@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         status: 'pending',
         payment_method: 'stripe',
         currency: 'USD',
-        total_amount: Math.round(product.price_usd * 100), // Stripe pakai cents
+        total_amount: product.price_usd, // Stripe pakai cents
       })
       .select()
       .single()
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     await supabase.from('order_items').insert({
       order_id: order.id,
       product_id: productId,
-      price_paid: Math.round(product.price_usd * 100),
+      price_paid: product.price_usd,
     })
 
     // Buat Stripe Checkout Session

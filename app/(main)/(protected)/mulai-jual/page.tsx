@@ -110,7 +110,7 @@ export default function Page() {
               </Field>
               <Field>
                 <FieldLabel htmlFor="form-bank">Bank</FieldLabel>
-                <Select items={banks} defaultValue="bca" name="bank_name">
+                <Select  defaultValue="bca" name="bank_name">
                   <SelectTrigger
                     id="form-bank"
                     className="border border-black bg-white rounded-sm"

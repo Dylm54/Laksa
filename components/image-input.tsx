@@ -1,14 +1,23 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
 
-export default function ImageInput() {
+interface ImageInputProps {
+  action: "add" | "edit";
+  imageUrl?: string;
+}
+
+export default function ImageInput({ action, imageUrl }: ImageInputProps) {
   const [fileName, setFileName] = useState<string>("Belum ada file");
-  const [isFileSelected, setIsFileSelected] = useState<boolean>(false);
-  const [imagePreview, setImagePreview] = useState<string>("");
+  const [isFileSelected, setIsFileSelected] = useState<boolean>(
+    action === "edit" && Boolean(imageUrl)
+  );
+  const [imagePreview, setImagePreview] = useState<string>(
+    action === "edit" && imageUrl ? imageUrl : ""
+  );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const handleClick = () => {
@@ -48,7 +57,7 @@ export default function ImageInput() {
         className="hidden"
         accept=".jpg,.jpeg,.png"
         onChange={handleFileChange}
-        required
+        required={action === "add" ? true : false}
       />
       {!isFileSelected && (
         <Button

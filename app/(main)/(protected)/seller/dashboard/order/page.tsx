@@ -13,6 +13,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getSellerOrders } from "@/lib/data/orders";
 import { convertUsdToIdr, formatCompactIDR, formatRelativeTime, formatRupiah } from "@/lib/utils";
 import { getSellerProducts } from "@/lib/data/products";
+import { EmptyState } from "@/components/empty-state";
 
 export default async function Page() {
   const supabase = await createClient();
@@ -42,7 +43,7 @@ export default async function Page() {
       <div className="flex flex-1 flex-col gap-4 p-8">
         <h1 className="text-xl mt-2">Order</h1>
         <div className="overflow-hidden border border-black rounded-sm">
-          {order && (
+          {order && order.length > 0 ? (
             <Table>
             <TableHeader>
               <TableRow className="border-b-black">
@@ -56,7 +57,13 @@ export default async function Page() {
               </TableRow>
             </TableHeader>
             <TableBody className="bg-white">
-              {order.map((item, i) => (
+              {order.map((item, i) => {
+                const isXendit = item.orders.payment_method === "xendit";
+                const formattedPrice = isXendit 
+                  ? formatRupiah(item.price_paid) 
+                  : `$${item.price_paid}`;
+
+                return (
                 <TableRow key={i} className="border-b-black">
                 <TableCell className="font-medium p-0">
                   <div className="flex flex-row gap-4 items-center">
@@ -74,12 +81,14 @@ export default async function Page() {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="text-right">{item.orders.payment_method === "xendit" ? formatRupiah(item.price_paid) : `$${item.price_paid}`}</TableCell>
+                <TableCell className="text-right">{item.orders.status === "pending" ? 0 : formattedPrice}</TableCell>
                 <TableCell className="text-right">{item.orders.status}</TableCell>
               </TableRow>
-              ))}
+              )})}
             </TableBody>
           </Table>
+          ) : (
+            <EmptyState title="Belum ada order" />
           )}
           
         </div>

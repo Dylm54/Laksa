@@ -31,7 +31,7 @@ export async function getSellerOrders(sellerId: string) {
     .select(`
       *,
       products!inner (title, seller_id, cover_image),
-      orders (status, paid_at, payment_method, created_at)
+      orders!inner (status, paid_at, payment_method, created_at)
     `)
     .eq('products.seller_id', sellerId)
     .order('created_at', { ascending: false })

@@ -5,11 +5,13 @@ export async function uploadCover(file: File, productId: string) {
     const supabase = await createClient()
   
     const fileExt = file.name.split('.').pop()
-    const path = `products/${productId}/cover.${fileExt}`
+    const path = `products/${productId}/cover-${Date.now()}.${fileExt}`
   
     const { error } = await supabase.storage
       .from('covers')
-      .upload(path, file,)
+      .upload(path, file, {
+        upsert: true, 
+      })
   
     if (error) throw error
   
@@ -28,7 +30,9 @@ export async function uploadCover(file: File, productId: string) {
 
     const { error } = await supabase.storage
       .from('product-files')
-      .upload(path, file,)
+      .upload(path, file, {
+      upsert: true, 
+    })
 
     if (error) throw error
   
