@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
-import type { OrderItemWithProduct } from '@/lib/types'
+import type { PurchasedProduct } from '@/lib/types'
 
 // Fetch semua pembelian user yang login
-export async function getMyPurchases(): Promise<OrderItemWithProduct[]> {
+export async function getMyPurchases(): Promise<PurchasedProduct[]> {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
@@ -13,13 +13,13 @@ export async function getMyPurchases(): Promise<OrderItemWithProduct[]> {
     .select(`
       *,
       products (title, slug, cover_image),
-      orders!inner (buyer_id, status, paid_at)
+      orders!inner (buyer_id, status, paid_at, currency)
     `)
     .eq('orders.buyer_id', user.id)
     .eq('orders.status', 'paid')
 
   if (error) throw new Error(error.message)
-  return data as OrderItemWithProduct[]
+  return data as PurchasedProduct[]
 }
 
 // Fetch order masuk untuk seller

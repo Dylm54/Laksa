@@ -1,0 +1,11 @@
+.heading h1 { font-size: 25px; line-height: 1.15; font-weight: 400; letter-spacing: -.055em; }
+.count { font-size: 13px; line-height: 1.5; color: #64675f; white-space: nowrap; }
+.emptyTitle { margin-top: 14px; font-size: 32px; line-height: 1.08; letter-spacing: -.055em; font-weight: 400; }
+.loading { margin-top: 44px; font-size: 16px; }
+.loadingRows { margin-top: 20px; }
+.loadingRows > div { height: 108px; background: #f4f4ee; }
+.loadingRows > div + div { border-top: 1px solid #999999; }
+@media (max-width: 600px) {
+  .heading h1 { font-size: 23px; }
+  .emptyTitle { font-size: 28px; }
+}

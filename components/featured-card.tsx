@@ -1,17 +1,36 @@
 import Image from "next/image";
 import { Badge } from "./ui/badge";
+import { ArrowUpRight } from "lucide-react";
+import styles from "./catalog-editorial.module.css";
 
 export default function FeaturedCard({
   title,
   description,
   priceIdr,
   imageUrl,
+  variant = "default",
 }: {
   title: string | null;
   description: string | null;
   priceIdr: string | null;
   imageUrl: string | null;
+  variant?: "default" | "editorial";
 }) {
+  if (variant === "editorial") {
+    return (
+      <article className={styles.featuredCard}>
+        <div className={styles.featuredCover}>
+          {imageUrl && <Image src={imageUrl} fill alt={title || "Cover produk unggulan"} sizes="(max-width: 760px) 100vw, 50vw" />}
+        </div>
+        <div className={styles.featuredInfo}>
+          <div className={styles.featuredLabel}><span>Produk unggulan</span></div>
+          <h2>{title}</h2>
+          <p className={styles.featuredDescription}>{description}</p>
+          <div className={styles.featuredBottom}><p className={styles.featuredPrice}>{priceIdr}</p><span className={styles.featuredAction}>Lihat detail <ArrowUpRight size={22} aria-hidden="true" /></span></div>
+        </div>
+      </article>
+    );
+  }
   return (
     <div className="neo-hover grid md:grid-cols-2 border gap-8 bg-white border-black hover:!bg-white items-center hover:border-black rounded-sm overflow-hidden">
       <div className="p-8">

@@ -18,144 +18,110 @@ import {
   BadgePercent,
   LogIn,
   UserPlus,
-  BadgeCheckIcon,
   LogOutIcon,
   Settings,
   Download,
+  ChevronDown,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import styles from "./auth-button.module.css";
 
-interface NavigationItem {
-  title: string;
-  href: string;
-  icon: React.ReactNode;
+const publicNavigationData = [
+  { title: "Jelajah", href: "/", icon: Compass },
+  { title: "Kategori", href: "/kategori", icon: Component },
+  { title: "Mulai jual", href: "/mulai-jual", icon: BadgePercent },
+];
+
+function PublicNavigation() {
+  return publicNavigationData.map(({ title, href, icon: Icon }) => (
+    <DropdownMenuItem asChild className={styles.item} key={href}>
+      <Link href={href}><Icon aria-hidden="true" />{title}</Link>
+    </DropdownMenuItem>
+  ));
 }
-
-const publicNavigationData: NavigationItem[] = [
-  { title: "Jelajah", href: "/", icon: <Compass /> },
-  { title: "Kategori", href: "/kategori", icon: <Component /> },
-  { title: "Mulai jual", href: "/mulai-jual", icon: <BadgePercent /> },
-];
-
-const profileNavigationData: NavigationItem[] = [
-  { title: "Jelajah", href: "/", icon: <Compass /> },
-  { title: "Kategori", href: "/kategori", icon: <Component /> },
-  { title: "Mulai jual", href: "/mulai-jual", icon: <BadgePercent /> },
-];
 
 export async function AuthButton() {
   const supabase = await createClient();
-
-  // You can also use getUser() which will be slower.
   const { data } = await supabase.auth.getClaims();
-
   const user = data?.claims;
-  console.log("User in AuthButton:", user);
+  const profile = user ? (await supabase.from("profiles").select("full_name").eq("id", user.sub).maybeSingle()).data : null;
+  const name = [profile?.full_name, user?.user_metadata?.full_name, user?.user_metadata?.name, user?.email]
+    .find((value): value is string => typeof value === "string" && value.trim().length > 0)
+    || "Akun Laksa";
+  const initials = name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
 
   return user ? (
-    <div className="flex items-center gap-4">
-      {/* Hey, {user.email}! */}
-      {/* <LogoutButton /> */}
-      {/* Desktop width navigation */}
+    <div className={styles.auth}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="default"
-            size="icon"
-            className="md:rounded-full cursor-pointer !border-0"
-          >
-            <MenuIcon className="flex md:hidden"/>
-            <Avatar className="hidden md:flex">
-              <AvatarImage src={user?.user_metadata?.avatar_url} alt="shadcn" />
-              <AvatarFallback>LR</AvatarFallback>
+          <button type="button" className={styles.profileTrigger} aria-label="Buka menu profil">
+            <Avatar className={styles.avatar}>
+              <AvatarImage src={user.user_metadata?.avatar_url} alt="" />
+              <AvatarFallback className={styles.avatarFallback}>{initials}</AvatarFallback>
             </Avatar>
-          </Button>
+            <span className={styles.profileText}>Profil</span>
+            <ChevronDown className={styles.chevron} size={14} aria-hidden="true" />
+          </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-44">
+        <DropdownMenuContent align="end" sideOffset={14} collisionPadding={12} className={styles.menu}>
+          <DropdownMenuLabel className={styles.identity}>
+            <span className={styles.eyebrow}>AKUN</span>
+            <span className={styles.name}>{name}</span>
+            {user.email && user.email !== name && <span className={styles.email}>{user.email}</span>}
+          </DropdownMenuLabel>
+          <DropdownMenuGroup className={styles.mobileOnly}>
+            <DropdownMenuLabel className={styles.sectionLabel}>Halaman</DropdownMenuLabel>
+            <PublicNavigation />
+            <DropdownMenuSeparator className={styles.separator} />
+          </DropdownMenuGroup>
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="flex md:hidden">Halaman</DropdownMenuLabel>
-            {publicNavigationData.map((item, index) => (
-              <DropdownMenuItem className="flex md:hidden" key={index}>
-                {item.icon}
-                <Link className="w-full" href={item.href}>
-                  {item.title}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-            <DropdownMenuSeparator className="flex md:hidden" />
-            <DropdownMenuLabel className="flex md:hidden">
-              Personal
-            </DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Download />
-              <Link className="w-full" href="/pembelian-saya">
-                Pembelian Saya
-              </Link>
+            <DropdownMenuLabel className={styles.sectionLabel}>Personal</DropdownMenuLabel>
+            <DropdownMenuItem asChild className={styles.item}>
+              <Link href="/pembelian-saya"><Download aria-hidden="true" />Pembelian Saya</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className="hidden md:flex">
-              <BadgePercent />
-              <Link className="w-full" href="/mulai-jual">
-                Mulai jual
-              </Link>
+            <DropdownMenuItem asChild className={`${styles.item} ${styles.desktopOnly}`}>
+              <Link href="/mulai-jual"><BadgePercent aria-hidden="true" />Mulai jual</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings />
-              <Link className="w-full" href="/">
-                Pengaturan Profil
-              </Link>
+            <DropdownMenuItem asChild className={styles.item}>
+              <Link href="/pengaturan-profil"><Settings aria-hidden="true" />Pengaturan Profil</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <LogOutIcon className="text-red-600"/>
-            <LogoutButton />
+          <DropdownMenuSeparator className={styles.separator} />
+          <DropdownMenuItem asChild className={`${styles.item} ${styles.logout}`}>
+            <LogoutButton><LogOutIcon aria-hidden="true" />Keluar</LogoutButton>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
   ) : (
-    <div className="flex gap-2">
+    <div className={styles.auth}>
       <DropdownMenu>
-        <DropdownMenuTrigger className="md:hidden flex" asChild>
-          <Button variant="outline" size="icon">
-            <MenuIcon />
-            <span className="sr-only">Menu</span>
-          </Button>
+        <DropdownMenuTrigger asChild>
+          <button type="button" className={`${styles.menuTrigger} ${styles.mobileOnly}`} aria-label="Buka menu navigasi">
+            <MenuIcon size={22} aria-hidden="true" />
+          </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end">
+        <DropdownMenuContent align="end" sideOffset={14} collisionPadding={12} className={styles.menu}>
+          <DropdownMenuLabel className={styles.identity}>
+            <span className={styles.eyebrow}>SELAMAT DATANG DI</span>
+            <span className={styles.name}>Laksa.</span>
+          </DropdownMenuLabel>
           <DropdownMenuGroup>
-            <DropdownMenuLabel>Halaman</DropdownMenuLabel>
-            {publicNavigationData.map((item, index) => (
-              <DropdownMenuItem key={index}>
-                {item.icon}
-                <Link className="w-full" href={item.href}>
-                  {item.title}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogIn />
-              <Link className="w-full" href="/auth/login">
-                Masuk
-              </Link>
+            <DropdownMenuLabel className={styles.sectionLabel}>Halaman</DropdownMenuLabel>
+            <PublicNavigation />
+            <DropdownMenuSeparator className={styles.separator} />
+            <DropdownMenuItem asChild className={styles.item}>
+              <Link href="/auth/login"><LogIn aria-hidden="true" />Masuk</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <UserPlus />
-              <Link className="w-full" href="/auth/sign-up">
-                Daftar
-              </Link>
+            <DropdownMenuItem asChild className={`${styles.item} ${styles.signup}`}>
+              <Link href="/auth/sign-up"><UserPlus aria-hidden="true" />Daftar</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <div className="hidden md:flex gap-2">
-        <Button asChild size="lg" variant={"outline"} className="text-lg border-black rounded-sm py-6 px-5">
-          <Link href="/auth/login">Masuk</Link>
-        </Button>
-        <Button asChild size="lg" variant={"default"} className="text-lg border-black rounded-sm py-6 px-5">
-          <Link href="/auth/sign-up">Daftar</Link>
-        </Button>
+      <div className={`${styles.authLinks} ${styles.desktopOnly}`}>
+        <Button asChild size="lg" variant="outline"><Link href="/auth/login" className={styles.login}>Masuk</Link></Button>
+        {/* <Button asChild size="lg"><Link href="/auth/sign-up">Daftar</Link></Button> */}
       </div>
     </div>
   );

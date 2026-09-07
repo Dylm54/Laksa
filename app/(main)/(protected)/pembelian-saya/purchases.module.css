@@ -1,0 +1,83 @@
+.page { --ink: #111110; --sage: #d1ddd3; --lilac: #ccabfe; --orange: #fe7140; min-height: 100vh; padding: 64px 24px 80px; background: #fff; color: var(--ink); font-family: var(--font-inter), Arial, Helvetica, sans-serif; font-weight: 400; -webkit-font-smoothing: antialiased; }
+.container { max-width: 1400px; margin-inline: auto; }
+.intro { display: grid; grid-template-columns: 40% 60%; align-items: end; padding: 44px 0 46px; }
+.introCopy { display: flex; flex-direction: column; justify-content: space-between; align-self: stretch; gap: 32px; padding: 5px 24px 0 0; }
+.sectionLabel { font-size: 20px; line-height: 1.4; font-weight: 600; letter-spacing: -.035em; }
+.introCopy p { font-size: 18px; line-height: 1.4; letter-spacing: -.035em; }
+.intro h1 { margin-left: -4px; font-size: clamp(56px, 6.8vw, 98px); line-height: .98; letter-spacing: -.075em; font-weight: 400; }
+.collection { margin-top: 12px; }
+.collectionHeader { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--ink); }
+.collectionHeader h2 { font-size: 29px; font-weight: 400; line-height: 1.2; letter-spacing: -.055em; }
+.count { flex-shrink: 0; padding: 7px 10px; font-size: 11px; line-height: 1.4; }
+.eyebrow { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 10px; font-weight: 400; line-height: 1.5; letter-spacing: -.015em; }
+.list { list-style: none; padding: 0; margin: 0; }
+.purchase { display: grid; grid-template-columns: 132px minmax(0, 1fr) minmax(130px, .4fr) 162px; align-items: center; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--sage); }
+.cover { position: relative; width: 132px; height: 132px; background: var(--sage); border: 1px solid var(--ink); }
+.coverImage { object-fit: contain; }
+.emptyCover { position: absolute; inset: 0; display: grid; place-items: center; color: #62665e; }
+.productCopy { min-width: 0; }
+.productCopy > .eyebrow { color: #62665e; }
+.productCopy h3 { margin-top: 10px; font-size: clamp(23px, 2.2vw, 31px); line-height: 1.15; font-weight: 400; letter-spacing: -.055em; overflow-wrap: anywhere; }
+.date { margin-top: 14px; color: #62665e; font-size: 13px; line-height: 1.5; letter-spacing: -.015em; }
+.priceBlock { min-width: 0; }
+.priceBlock > .eyebrow { color: #62665e; }
+.price { margin-top: 9px; font-size: 23px; line-height: 1.2; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.download, .explore { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 56px; padding: 15px 17px; border: 1px solid var(--ink); background: var(--orange); color: var(--ink); text-decoration: none; font-size: 17px; line-height: 1.3; letter-spacing: -.025em; transition: background .18s; }
+.download svg, .explore svg { flex-shrink: 0; }
+.download:hover, .explore:hover { background: var(--sage); }
+.page a:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+.empty { display: grid; grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); align-items: center; gap: clamp(32px, 5vw, 72px); margin-top: 32px; }
+.emptyArt { display: flex; flex-direction: column; justify-content: space-between; min-height: 340px; padding: 24px; background: var(--lilac); border: 1px solid var(--ink); }
+.libraryIcon { width: 120px; height: 120px; align-self: center; }
+.emptyCopy { min-width: 0; padding-block: 12px; }
+.emptyCopy > .eyebrow { color: #62665e; }
+.emptyCopy h3 { margin-top: 18px; font-size: clamp(40px, 4.5vw, 66px); line-height: 1.03; letter-spacing: -.065em; font-weight: 400; }
+.emptyCopy p { max-width: 440px; margin-top: 22px; color: #53594f; font-size: 17px; line-height: 1.55; letter-spacing: -.025em; }
+.explore { width: min(100%, 350px); margin-top: 28px; min-height: 60px; font-size: 18px; }
+.skeletonRow { display: flex; align-items: center; gap: 28px; padding-block: 28px; border-bottom: 1px solid var(--sage); }
+.skeletonCover { width: 132px; height: 132px; flex-shrink: 0; background: var(--sage); }
+.skeletonText { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+.skeletonText span { width: 65%; height: 24px; background: #edf0e9; }
+.skeletonText span + span { width: 40%; height: 14px; }
+.skeletonAction { width: 162px; height: 56px; background: #edf0e9; }
+@media (max-width: 1100px) {
+  .purchase { grid-template-columns: 112px minmax(0, 1fr) 142px; gap: 18px 24px; }
+  .cover { width: 112px; height: 112px; grid-row: 1 / 3; }
+  .productCopy { grid-column: 2; grid-row: 1; }
+  .priceBlock { grid-column: 2; grid-row: 2; }
+  .priceBlock > .eyebrow { display: none; }
+  .price { margin-top: 0; font-size: 20px; }
+  .download { grid-column: 3; grid-row: 1 / 3; padding-inline: 14px; }
+  .date { margin-top: 10px; }
+}
+@media (min-width: 761px) and (max-width: 1100px) { .page { padding-top: 116px; } }
+@media (max-width: 760px) {
+  .page { padding: 112px 16px 48px; }
+  .intro { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 30px 0 28px; }
+  .introCopy { gap: 15px; padding: 0; }
+  .sectionLabel { font-size: 18px; }
+  .introCopy p { font-size: 16px; }
+  .intro h1 { margin-left: -2px; font-size: clamp(53px, 11vw, 78px); }
+  .collection { margin-top: 8px; }
+  .collectionHeader { padding-block: 16px; }
+  .collectionHeader h2 { font-size: 26px; }
+  .count { font-size: 10px; padding-inline: 8px; }
+  .purchase { grid-template-columns: 112px minmax(0, 1fr); padding-block: 24px; gap: 15px 20px; }
+  .productCopy h3 { font-size: 24px; }
+  .download { grid-column: 1 / -1; grid-row: 3; min-height: 52px; }
+  .empty { grid-template-columns: minmax(0, 1fr); gap: 28px; margin-top: 24px; }
+  .emptyArt { min-height: 220px; padding: 20px; }
+  .libraryIcon { width: 80px; height: 80px; }
+  .emptyCopy { padding: 0; }
+  .emptyCopy h3 { font-size: 43px; }
+  .skeletonRow { gap: 18px; flex-wrap: wrap; }
+  .skeletonCover { width: 112px; height: 112px; }
+  .skeletonAction { width: 100%; height: 52px; }
+}
+@media (max-width: 480px) {
+  .purchase { grid-template-columns: 92px minmax(0, 1fr); gap: 14px 17px; }
+  .cover { width: 92px; height: 92px; align-self: start; }
+  .productCopy h3 { font-size: 23px; }
+  .date { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .download, .explore { transition: none; } }

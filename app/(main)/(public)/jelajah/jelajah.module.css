@@ -1,0 +1,28 @@
+.jelajah { --ink: #111110; --orange: #fe7140; --lilac: #ccabfe; --rule: #d1ddd3; min-height: 100vh; background: #fff; color: var(--ink); font-family: var(--font-inter), Arial, Helvetica, sans-serif; padding: 64px 24px 80px; }
+.intro { display: grid; grid-template-columns: 40% 60%; align-items: end; padding: 40px 0 42px; }
+.eyebrow { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 12px; line-height: 1.4; letter-spacing: -.02em; }
+.introCopy { display: flex; flex-direction: column; justify-content: space-between; align-self: stretch; gap: 36px; padding-right: 28px; }
+.introCopy p { max-width: 390px; font-size: 19px; line-height: 1.35; letter-spacing: -.035em; }
+.intro h1 { font-size: clamp(52px, 6.5vw, 100px); line-height: .99; letter-spacing: -.075em; font-weight: 400; margin-left: -5px; }
+.categories { padding: 16px 0 0px; }
+.featured { margin-top: 28px; }
+.catalog { margin-top: 45px; }
+.catalogTop { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 0 10px; margin-bottom: 28px; }
+.catalogTop h2 { font-size: 32px; line-height: 1.1; letter-spacing: -.05em; font-weight: 400; display: flex; align-items: center; gap: 24px; }
+.catalogTop h2 span { font-family: Arial, sans-serif; font-size: 26px; }
+.sort { display: flex; gap: 18px; align-items: center; }
+.sort > span { font-family: monospace; font-size: 12px; }
+.jelajah a:focus-visible, .jelajah button:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+@media (min-width: 761px) and (max-width: 1100px) { .jelajah { padding-top: 116px; } }
+@media (max-width: 760px) {
+  .jelajah { padding: 116px 16px 50px; }
+  .intro { grid-template-columns: 1fr; gap: 30px; padding: 28px 0 32px; }
+  .introCopy { gap: 16px; }
+  .introCopy p { font-size: 17px; }
+  .intro h1 { font-size: clamp(49px, 10.5vw, 76px); margin-left: -3px; }
+  .featured { margin-top: 22px; }
+  .catalog { margin-top: 34px; }
+  .catalogTop { align-items: flex-start; flex-direction: column; gap: 20px; margin-bottom: 20px; }
+  .catalogTop h2 { font-size: 28px; }
+  .sort { width: 100%; justify-content: space-between; }
+}

@@ -1,0 +1,81 @@
+.page { --ink: #111110; --sage: #d1ddd3; --lilac: #ccabfe; --orange: #fe7140; min-height: 100vh; padding: 64px 24px 80px; background: #fff; color: var(--ink); font-family: var(--font-inter), Arial, Helvetica, sans-serif; font-weight: 400; -webkit-font-smoothing: antialiased; }
+.container { max-width: 1400px; margin-inline: auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 80px; padding-block: 22px; }
+.eyebrow { font-size: 20px; line-height: 1.5; font-weight: 600; letter-spacing: -.015em; }
+.back a { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: inherit; font-size: 15px; letter-spacing: -.025em; text-decoration: none; }
+.back a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.back svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.page a:focus-visible, .payButton:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+.intro { display: grid; grid-template-columns: 40% 60%; gap: 0; align-items: end; padding: 10px 0 38px; }
+.introCopy { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; gap: 28px; padding: 6px 28px 0 0; }
+.introCopy p { font-size: 18px; line-height: 1.4; letter-spacing: -.035em; }
+.intro h1 { font-size: clamp(48px, 6.1vw, 88px); line-height: .98; letter-spacing: -.075em; font-weight: 400; margin-left: -4px; }
+.checkoutGrid { display: grid; grid-template-columns: minmax(0, 60fr) minmax(0, 40fr); align-items: start; gap: 28px; margin-top: 30px; }
+.order, .payment { min-width: 0; border: 1px solid var(--ink); }
+.panelHeader { padding: 23px 26px;  }
+.panelHeader h2 { margin-top: 9px; font-size: 30px; font-weight: 400; letter-spacing: -.055em; line-height: 1.1; }
+.product { display: flex; align-items: flex-start; gap: 24px; padding: 26px; }
+.cover { position: relative; flex: 0 0 180px; width: 180px; height: 180px; background: var(--sage); border: 1px solid var(--ink); }
+.coverImage { object-fit: contain; }
+.emptyCover { position: absolute; inset: 0; display: grid; place-items: center; color: #62665e; }
+.productCopy { flex: 1; min-width: 0; }
+.category { display: inline-block; max-width: 100%; border: 1px solid var(--ink); padding: 6px 8px; background: var(--lilac); font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; line-height: 1.4; text-transform: uppercase; overflow-wrap: anywhere; }
+.productCopy h3 { margin-top: 16px; font-size: clamp(23px, 2.5vw, 35px); line-height: 1.15; font-weight: 400; letter-spacing: -.055em; overflow-wrap: anywhere; }
+.creator { margin-top: 16px; font-size: 14px; line-height: 1.5; letter-spacing: -.02em; color: #62665e; overflow-wrap: anywhere; }
+.creator span { color: var(--ink); }
+.itemPrice { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 21px 26px; border-top: 1px solid var(--ink); font-size: 16px; line-height: 1.4; letter-spacing: -.025em; }
+.itemPrice span:last-child { text-align: right; overflow-wrap: anywhere; }
+.total { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 25px 26px; border-top: 1px solid var(--ink); }
+.total > div { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+.currency { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; border: 1px solid var(--ink); padding: 2px 6px; }
+.total p { font-size: clamp(28px, 3vw, 44px); line-height: 1.1; letter-spacing: -.06em; text-align: right; overflow-wrap: anywhere; }
+.paymentBody { padding: 24px; }
+.paymentNote { margin: 23px 0; font-size: 13px; line-height: 1.6; letter-spacing: -.015em; color: #62665e; }
+.payButton { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: 100%; min-height: 61px; padding: 16px 20px; border: 1px solid var(--ink); border-radius: 0; background: var(--orange); color: var(--ink); font: inherit; font-size: 20px; line-height: 1.25; letter-spacing: -.035em; text-decoration: none; cursor: pointer; transition: background .18s; }
+.payButton:hover:not(:disabled) { background: var(--sage); }
+.payButton:disabled { background: #eee; color: #777; cursor: not-allowed; }
+.payButton svg { flex-shrink: 0; }
+.loading { padding-block: 30px; }
+.loadingTitle { width: min(550px, 85%); height: 105px; margin-bottom: 38px; background: var(--sage); }
+.loadingPanel { min-height: 340px; background: #f1f3ed; border: 1px solid var(--sage); }
+.loadingPanel:last-child { background: #e5d5fc; }
+.empty { min-height: calc(100vh - 144px); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 26px; padding-block: 48px; }
+.empty h1 { font-size: clamp(48px, 7vw, 96px); line-height: 1; font-weight: 400; letter-spacing: -.075em; }
+.empty p { max-width: 450px; font-size: 18px; line-height: 1.5; color: #62665e; }
+.empty .payButton { width: min(100%, 350px); }
+@media (max-width: 1100px) {
+  .product { gap: 18px; padding: 22px; }
+  .cover { flex-basis: 140px; width: 140px; height: 140px; }
+  .paymentBody { padding: 20px; }
+  .panelHeader { padding: 22px; }
+  .panelHeader h2 { font-size: 27px; }
+  .checkoutGrid { gap: 22px; grid-template-columns: minmax(0, 55fr) minmax(0, 45fr); }
+  .total { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .total > div { width: 100%; flex-direction: row; justify-content: space-between; }
+}
+@media (min-width: 761px) and (max-width: 1100px) { .page { padding-top: 116px; } }
+@media (max-width: 900px) { .checkoutGrid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .page { padding: 112px 16px 48px; }
+  .topbar { min-height: 73px; }
+  .topbar > .eyebrow { font-size: 10px; }
+  .intro { grid-template-columns: minmax(0, 1fr); gap: 26px; padding: 0 0 28px; }
+  .introCopy { gap: 12px; padding: 0; }
+  .introCopy p { font-size: 16px; }
+  .intro h1 { font-size: clamp(45px, 10vw, 70px); margin-left: -2px; }
+  .checkoutGrid { margin-top: 24px; }
+  .panelHeader { padding: 21px 20px; }
+  .panelHeader h2 { font-size: 27px; }
+  .total { padding: 23px 20px; }
+  .total p { font-size: 36px; }
+  .itemPrice { padding: 18px 20px; font-size: 15px; }
+  .payButton { font-size: 18px; }
+}
+@media (max-width: 480px) {
+  .product { gap: 16px; padding: 22px 18px; }
+  .cover { flex-basis: 100px; width: 100px; height: 100px; }
+  .productCopy h3 { font-size: 23px; margin-top: 12px; }
+  .creator { font-size: 13px; margin-top: 12px; }
+  .paymentBody { padding: 20px 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .payButton { transition: none; } }
