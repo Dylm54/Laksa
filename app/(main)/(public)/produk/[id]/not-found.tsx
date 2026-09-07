@@ -1,16 +1,18 @@
-import Link from 'next/link';
- 
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import styles from "./product-detail.module.css";
+
 export default function NotFound() {
   return (
-    <main className="flex h-screen flex-col items-center justify-center gap-2">
-      <h2 className="text-xl font-semibold">404 Not Found</h2>
-      <p>Could not find the requested invoice.</p>
-      <Link
-        href="/jelajah"
-        className="mt-4 rounded-md bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
-      >
-        Go Back
-      </Link>
+    <main className={styles.page}>
+      <div className={styles.notFound}>
+        <span className={styles.eyebrow}>404 / PRODUK TIDAK DITEMUKAN</span>
+        <h1>Karya ini belum<br />bisa ditemukan.</h1>
+        <p>Produk yang kamu cari tidak tersedia. Temukan karya digital lainnya di Jelajah.</p>
+        <Link href="/jelajah" className={styles.purchaseLink}>
+          Kembali ke Jelajah <ArrowUpRight size={25} aria-hidden="true" />
+        </Link>
+      </div>
     </main>
   );
 }

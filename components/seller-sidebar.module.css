@@ -1,0 +1,34 @@
+.sidebar { border-color: #fe7140; }
+.header, .content, .footer { background: #fe7140; color: #111110; font-family: var(--font-inter), Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+.header { padding: 0; }
+.wordmark { display: flex; align-items: center; gap: 7px; height: 80px; padding: 12px 24px; color: black; overflow: hidden; }
+.logoText { font-size: 36px; line-height: 1; letter-spacing: -.085em; font-weight: 600; }
+.logoStar { font-size: 18px; margin-top: 16px; }
+.content { padding: 28px 16px; gap: 24px; }
+.group { padding: 0; }
+.groupLabel[data-slot="sidebar-group-label"] { padding: 0 12px; margin-bottom: 15px; color: black; font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; font-weight: 400; border-radius: 0; }
+.menu { }
+.menuButton[data-slot="sidebar-menu-button"] { width: 100%; height: 51px; gap: 12px; padding: 14px 12px; border-bottom: 1px solid #111110; border-radius: 0; color: #111110; font-size: 17px; letter-spacing: -.035em; font-weight: 400; }
+.menuButton[data-active="true"] { background: black; color: white }
+.menuButton:hover { background: black; color: white; }
+.menuButton > svg { width: 18px; height: 18px; stroke-width: 1.4; }
+.menuButton .navArrow { margin-left: auto; opacity: 0; }
+.menuButton[data-active="true"] .navArrow, .menuButton:hover .navArrow { opacity: 1; }
+.note { margin-top: auto; padding: 30px 12px 12px; }
+.note p { margin-top: 14px; font-size: 32px; letter-spacing: -.06em; line-height: 1.05; }
+.note > span { display: block; margin-top: 24px; font-family: "SFMono-Regular", Consolas, monospace; font-size: 9px; }
+.footer { padding: 20px 24px; gap: 10px; border-top: 1px solid #111110; }
+.accountLabel { font-family: "SFMono-Regular", Consolas, monospace; font-size: 9px; color: #64675f; }
+.rail::after { background: transparent; }
+.wordmark:focus-visible, .menuButton:focus-visible { outline: 2px solid #fe7140; outline-offset: -4px; }
+.sidebar:global([data-state="collapsed"]) .note { display: none; }
+:global([data-collapsible="icon"]) .content { padding: 20px 7px; }
+:global([data-collapsible="icon"]) .wordmark { padding: 0; justify-content: center; }
+:global([data-collapsible="icon"]) .logoText, :global([data-collapsible="icon"]) .note, :global([data-collapsible="icon"]) .footer { display: none; }
+:global([data-collapsible="icon"]) .logoStar { margin: 0; font-size: 24px; }
+:global([data-collapsible="icon"]) .navArrow { display: none; }
+:global([data-collapsible="icon"]) .menuButton[data-slot="sidebar-menu-button"] { padding: 7px !important; }
+@media (max-width: 767px) {
+  .header .wordmark { height: 70px; }
+  .content { padding-top: 24px; }
+}

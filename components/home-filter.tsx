@@ -2,8 +2,9 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import styles from "./catalog-editorial.module.css";
 
-export default function HomeFilter() {
+export default function HomeFilter({ variant = 'default' }: { variant?: 'default' | 'editorial' }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -18,10 +19,10 @@ export default function HomeFilter() {
 
     return (
         <Select defaultValue={currentSort} onValueChange={handleSortChange}>
-            <SelectTrigger className="w-full max-w-48 bg-white border border-black rounded-sm">
-              <SelectValue placeholder="Select a fruit" />
+            <SelectTrigger aria-label="Urutkan produk" className={variant === 'editorial' ? styles.sortTrigger : "w-full max-w-48 bg-white border border-black rounded-sm"}>
+              <SelectValue placeholder="Urutkan produk" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className={variant === 'editorial' ? styles.sortMenu : undefined}>
               <SelectGroup>
                 <SelectItem value="terbaru">Terbaru</SelectItem>
                 <SelectItem value="harga-terendah">Harga terendah</SelectItem>

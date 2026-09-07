@@ -2,21 +2,12 @@
 
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import SocialButton from "./social-button";
-import Separator from "./separator";
+import styles from "./auth-form.module.css";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   redirectTo?: string
@@ -48,78 +39,34 @@ export function LoginForm({
       // Update this route to redirect to an authenticated route. The user already has an active session.
       router.push(`${redirectTo}`);
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Terjadi kesalahan. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card className="ring-0 shadow-none bg-[#F4F4F0]">
-        <CardHeader>
-          <CardTitle className="text-2xl ">Login</CardTitle>
-          <CardDescription className="">
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SocialButton redirectTo={redirectTo} />
-          <div className="flex items-center my-3 gap-4">
-            <hr className="w-full" />
-            <div className="text-[#737373]">or</div>
-            <hr className="w-full" />
+    <div className={cn(styles.form, className)} {...props}>
+      <header className={styles.intro}>
+        <h1>Selamat datang<br />kembali.</h1><p>Masuk dan lanjutkan perjalanan kreatifmu.</p>
+      </header>
+      <div className={styles.social}><SocialButton redirectTo={redirectTo} label="Lanjutkan dengan Google" /></div>
+      <div className={styles.divider}>atau dengan email</div>
+      <form onSubmit={handleLogin} aria-busy={isLoading}>
+        <div className={styles.fields}>
+          <div className={styles.field}><label htmlFor="email">Email</label>
+            <input id="email" name="email" type="email" autoComplete="email" placeholder="nama@email.com" required value={email} onChange={e => setEmail(e.target.value)} className={styles.input} />
           </div>
-          <form onSubmit={handleLogin}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-sm border-black bg-white"
-                />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/auth/forgot-password"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="rounded-sm border-black bg-white"
-                />
-              </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button type="submit" className="w-full rounded-sm border-black neo-hover hover:text-black hover:!bg-[#F790E8]" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Login"}
-              </Button>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/auth/sign-up"
-                className="underline underline-offset-4"
-              >
-                Sign up
-              </Link>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+          <div className={styles.field}>
+            <div className={styles.labelRow}><label htmlFor="password">Password</label><Link href="/auth/forgot-password">Lupa password?</Link></div>
+            <input id="password" name="password" type="password" autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} className={styles.input} />
+          </div>
+
+          {error && <p className={styles.error} role="alert">{error}</p>}
+          <button type="submit" className={styles.submit} disabled={isLoading}><span>{isLoading ? "Sedang masuk…" : "Masuk"}</span><ArrowUpRight size={20} aria-hidden="true" /></button>
+        </div>
+        <p className={styles.switch}>Belum punya akun? <Link href="/auth/sign-up">Daftar sekarang</Link></p>
+      </form>
     </div>
   );
 }

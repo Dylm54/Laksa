@@ -1,12 +1,23 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import type { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
 import { useLogout } from "@/app/hooks/useLogout";
 
-export function LogoutButton() {
+export function LogoutButton({ children = "Sign Out", className, onClick, ...props }: ComponentProps<"button">) {
   const logout = useLogout();
 
-  return <button className="w-full text-start text-red-600" onClick={logout}>Sign Out</button>;
+  return (
+    <button
+      {...props}
+      type="button"
+      className={cn("w-full text-start text-red-600", className)}
+      onClick={(event) => {
+        onClick?.(event);
+        if (!event.defaultPrevented) void logout();
+      }}
+    >
+      {children}
+    </button>
+  );
 }

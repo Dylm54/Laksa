@@ -1,32 +1,19 @@
+import type { Metadata } from "next";
+import { Suspense } from "react";
 import { LoginForm } from "@/components/login-form";
-import loginBg from "../../../public/assets/login-bg.png"
-import Image from "next/image";
+import AuthLayout from "@/components/auth-layout";
+import styles from "@/components/auth-form.module.css";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ redirectTo?: string }> }) {
-  const { redirectTo } = await searchParams
-  console.log(`url redirectto: ${redirectTo}`)
+export const metadata: Metadata = { title: "Masuk — Laksa" };
 
-  return (
-    <div className="grid min-h-svh lg:grid-cols-2 bg-[#F4F4F0]">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <a href="#" className="flex items-center gap-2 font-medium">
-            <h1 className="font-display text-3xl tracking-[-0.08em]">Laksa</h1>
-          </a>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-md">
-            <LoginForm />
-          </div>
-        </div>
-      </div>
-      <div className="relative hidden bg-muted lg:block">
-        <Image
-          src={loginBg}
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
-    </div>
-  )
+type Props = { searchParams: Promise<{ redirectTo?: string }> };
+
+export default function Page(props: Props) {
+  return <AuthLayout><Suspense fallback={<div className={styles.loading} role="status">Memuat form masuk…</div>}><LoginContent {...props} /></Suspense></AuthLayout>;
+}
+
+async function LoginContent({ searchParams }: Props) {
+  const { redirectTo } = await searchParams;
+  const destination = typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//") && !redirectTo.includes("\\") ? redirectTo : "/";
+  return <LoginForm redirectTo={destination} />;
 }

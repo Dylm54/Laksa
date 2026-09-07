@@ -9,24 +9,14 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 const abcFont = localABCFont({
   src: [
     {
-      path: '../public/fonts/ABCFavorit-Regular.woff2',
-      weight: '400',
+      path: '../public/fonts/beausite-classic-medium.ttf',
+      weight: '500',
       style: 'normal'
     },
     {
-      path: '../public/fonts/ABCFavorit-RegularItalic.woff2',
+      path: '../public/fonts/beausite-classic-regular.ttf',
       weight: '400',
-      style: 'italic'
-    },
-    {
-      path: '../public/fonts/ABCFavorit-Bold.woff2',
-      weight: '700',
       style: 'normal'
-    },
-    {
-      path: '../public/fonts/ABCFavorit-BoldItalic.woff2',
-      weight: '700',
-      style: 'italic'
     },
   ],
   variable: '--font-abc'

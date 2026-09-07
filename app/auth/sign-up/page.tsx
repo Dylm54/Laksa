@@ -1,29 +1,9 @@
+import type { Metadata } from "next";
 import { SignUpForm } from "@/components/sign-up-form";
-import loginBg from "../../../public/assets/login-bg.png"
-import Image from "next/image";
+import AuthLayout from "@/components/auth-layout";
+
+export const metadata: Metadata = { title: "Daftar — Laksa" };
 
 export default function Page() {
-  return (
-    <div className="grid min-h-svh lg:grid-cols-2 bg-[#F4F4F0]">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <a href="#" className="flex items-center gap-2 font-medium">
-            <h1 className="font-display text-3xl tracking-[-0.08em]">Laksa</h1>
-          </a>
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-md">
-            <SignUpForm />
-          </div>
-        </div>
-      </div>
-      <div className="relative hidden bg-muted lg:block">
-        <Image
-          src={loginBg}
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
-      </div>
-    </div>
-  );
+  return <AuthLayout><SignUpForm /></AuthLayout>;
 }

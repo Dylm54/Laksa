@@ -30,3 +30,7 @@ export type ProductWithSeller = Product & {
 export type OrderItemWithProduct = OrderItem & {
   products: Pick<Product, 'title' | 'slug' | 'cover_image'>
 }
+
+export type PurchasedProduct = OrderItemWithProduct & {
+  orders: Pick<Order, 'currency' | 'paid_at'>
+}

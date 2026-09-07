@@ -46,6 +46,7 @@ export default function Search({ visible = true, placeholder = "Cari template, p
           <InputGroupInput 
             onChange={(e) => setSearchTerm(e.target.value)} 
             placeholder={placeholder}
+            aria-label={placeholder}
             className="text-black !text-md" 
             onKeyDown={handleKeyDown}
         />

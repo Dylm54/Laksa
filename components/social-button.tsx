@@ -32,7 +32,7 @@ const providers: providerType[] = [
   // }
 ];
 
-export default function SocialButton({ redirectTo }: { redirectTo: string }) {
+export default function SocialButton({ redirectTo, label }: { redirectTo: string; label?: string }) {
   function handleSocialLogin(provider: provider) {
     const supabase = createClient();
     supabase.auth.signInWithOAuth({
@@ -55,7 +55,7 @@ export default function SocialButton({ redirectTo }: { redirectTo: string }) {
             width={provider.size}
             height={provider.size}
           />
-          {provider.label}
+          {label ?? provider.label}
         </SocialAuthButton>
       ))}
     </div>

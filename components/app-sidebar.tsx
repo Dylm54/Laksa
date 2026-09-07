@@ -1,89 +1,31 @@
 "use client";
 
-import * as React from "react";
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { Suspense, type ComponentProps, type ReactNode } from "react";
+import { ArrowUpRight, LayoutGrid, Package, ShoppingBag } from "lucide-react";
 import { SideNavSeller } from "@/components/sidenav-seller";
-import { SideNavUser } from "@/components/sidenav-user";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 import Link from "next/link";
+import styles from "./seller-sidebar.module.css";
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  projects: [
-    {
-      name: "Home",
-      url: "/seller/dashboard/home",
-      icon: Frame,
-    },
-    {
-      name: "Produk",
-      url: "/seller/dashboard/produk",
-      icon: PieChart,
-    },
-    {
-      name: "Order",
-      url: "/seller/dashboard/order",
-      icon: Map,
-    },
-  ],
-};
+const projects = [
+  { name: "Home", url: "/seller/dashboard/home", icon: LayoutGrid },
+  { name: "Produk", url: "/seller/dashboard/produk", icon: Package },
+  { name: "Order", url: "/seller/dashboard/order", icon: ShoppingBag },
+];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ account, ...props }: ComponentProps<typeof Sidebar> & { account?: ReactNode }) {
   return (
-    <Sidebar collapsible="icon" {...props} className="!bg-black text-white pt-8 px-4">
-      <SidebarHeader className="bg-black">
-        <Link href="/">
-          <p className="font-display text-4xl md:ml-2 tracking-[-0.08em]">
-            Laksa
-          </p>
-        </Link>
+    <Sidebar collapsible="icon" {...props} className={styles.sidebar}>
+      <SidebarHeader className={styles.header}>
+        <Link href="/" className={styles.wordmark} aria-label="Laksa — beranda"><span className={styles.logoText}>Laksa</span></Link>
       </SidebarHeader>
-      <SidebarContent className="bg-black">
-        <SideNavSeller projects={data.projects} />
+      <SidebarContent className={styles.content}>
+        <Suspense fallback={null}><SideNavSeller projects={projects} /></Suspense>
       </SidebarContent>
-      <SidebarFooter className="bg-black">
-        <SideNavUser user={data.user} />
+      <SidebarFooter className={styles.footer}>
+        {account}
       </SidebarFooter>
-      <SidebarRail />
+      <SidebarRail className={styles.rail} />
     </Sidebar>
   );
 }

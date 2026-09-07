@@ -1,0 +1,65 @@
+.page { --ink: #111110; --sage: #d1ddd3; --lilac: #ccabfe; --orange: #fe7140; min-height: 100vh; padding: 64px 24px 80px; background: #fff; color: var(--ink); font-family: var(--font-inter), Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
+.container { max-width: 1400px; margin-inline: auto; }
+.intro { display: grid; grid-template-columns: 40% 60%; align-items: end; padding: 44px 0 46px; }
+.introCopy { display: flex; flex-direction: column; justify-content: space-between; align-self: stretch; gap: 32px; padding: 5px 28px 0 0; }
+.sectionLabel { font-size: 20px; line-height: 1.4; font-weight: 600; letter-spacing: -.035em; }
+.introCopy p { font-size: 18px; line-height: 1.4; letter-spacing: -.035em; }
+.intro h1 { margin-left: -4px; font-size: clamp(56px, 6.8vw, 98px); line-height: .98; letter-spacing: -.075em; font-weight: 400; }
+.content { display: grid; grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); margin-top: 16px; align-items: start; }
+.aside { padding-right: clamp(30px, 5vw, 72px); }
+.artwork { display: flex; flex-direction: column; justify-content: space-between; min-height: 350px; padding: 24px; border: 1px solid var(--ink); background: var(--lilac); }
+.eyebrow { font-family: "SFMono-Regular", Consolas, monospace; font-size: 10px; line-height: 1.5; }
+.asterisk { width: 180px; height: 180px; align-self: center; }
+.artworkCaption { display: flex; justify-content: space-between; align-items: end; gap: 16px; }
+.artworkCaption > span:first-child { font-size: 28px; line-height: 1.05; letter-spacing: -.06em; }
+.asideCopy { margin-top: 24px; font-size: 16px; line-height: 1.6; letter-spacing: -.025em; color: #62665e; }
+.form { min-width: 0; border: 1px solid var(--ink); background: #fff; }
+.formHeading { display: flex; align-items: center; gap: 16px; padding: 30px 32px; }
+.sectionNumber { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border: 1px solid var(--ink); background: var(--lilac); font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; }
+.formHeading h2 { font-size: 30px; line-height: 1.15; letter-spacing: -.055em; font-weight: 400; }
+.formHeading p { margin-top: 7px; font-size: 14px; color: #62665e; }
+.fields { display: grid; gap: 25px; min-width: 0; padding: 0 32px 30px; border: 0; }
+.field { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.field label { display: flex; align-items: center; gap: 8px; width: fit-content; font-size: 15px; line-height: 1.4; letter-spacing: -.025em; }
+.input { display: block; width: 100%; min-width: 0; height: 52px; padding: 13px 15px; border: 1px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink); font: inherit; font-size: 16px; line-height: 1.4; box-shadow: none; }
+.input::placeholder { color: #777b72; }
+.input[readonly] { background: #eff2ee; color: #62665e; }
+.input:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.input[aria-invalid="true"] { border-color: #a33220; }
+.usernameInput { position: relative; }
+.usernameInput > span { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); color: #62665e; pointer-events: none; }
+.usernameInput .input { padding-left: 37px; }
+.hint, .error { font-size: 13px; line-height: 1.6; letter-spacing: -.015em; }
+.hint { color: #62665e; }
+.error { color: #a33220; }
+.formFooter { padding: 0 32px 32px; }
+.feedback { display: flex; align-items: flex-start; gap: 10px; padding: 14px 16px; margin-bottom: 20px; border: 1px solid var(--ink); background: #fff0ea; font-size: 14px; line-height: 1.5; }
+.feedback[data-status="success"] { background: var(--sage); }
+.feedback svg { flex-shrink: 0; margin-top: 1px; }
+.submit { display: flex; justify-content: space-between; align-items: center; gap: 20px; width: 100%; min-height: 62px; padding: 16px 20px; border: 1px solid var(--ink); border-radius: 0; background: var(--orange); color: var(--ink); font: inherit; font-size: 19px; line-height: 1.3; letter-spacing: -.035em; cursor: pointer; transition: background .18s; }
+.submit:hover:not(:disabled) { background: var(--sage); }
+.submit:focus-visible, .retry:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+.submit:disabled { cursor: wait; opacity: .65; }
+.loading, .loadError { padding: 32px; border: 1px solid var(--ink); background: #eff2ee; font-size: 16px; line-height: 1.6; }
+.loadError h2 { font-size: 26px; letter-spacing: -.04em; margin-bottom: 12px; }
+.retry { display: inline-block; margin-top: 24px; text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 900px) {
+  .content { grid-template-columns: minmax(0, 1fr); }
+  .aside { display: none; }
+}
+@media (max-width: 760px) {
+  .page { padding: 60px 16px 48px; }
+  .intro { grid-template-columns: minmax(0, 1fr); gap: 27px; padding: 30px 0; }
+  .introCopy { gap: 14px; padding: 0; }
+  .sectionLabel { font-size: 18px; }
+  .introCopy p { font-size: 16px; }
+  .intro h1 { font-size: clamp(53px, 11vw, 78px); margin-left: -2px; }
+  .content { margin-top: 8px; }
+  .formHeading { padding: 24px 20px; gap: 12px; }
+  .formHeading h2 { font-size: 27px; }
+  .sectionNumber { width: 32px; height: 32px; font-size: 11px; }
+  .fields { padding: 0 20px 26px; }
+  .formFooter { padding: 0 20px 24px; }
+  .submit { padding-inline: 16px; font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .submit { transition: none; } }
