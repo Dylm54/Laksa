@@ -29,7 +29,7 @@ import styles from "./auth-button.module.css";
 const publicNavigationData = [
   { title: "Jelajah", href: "/", icon: Compass },
   { title: "Kategori", href: "/kategori", icon: Component },
-  { title: "Mulai jual", href: "/mulai-jual", icon: BadgePercent },
+  { title: "Mulai jual", href: "/seller/dashboard/home", icon: BadgePercent },
 ];
 
 function PublicNavigation() {
@@ -80,7 +80,7 @@ export async function AuthButton() {
               <Link href="/pembelian-saya"><Download aria-hidden="true" />Pembelian Saya</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className={`${styles.item} ${styles.desktopOnly}`}>
-              <Link href="/mulai-jual"><BadgePercent aria-hidden="true" />Mulai jual</Link>
+              <Link href="/seller/dashboard/home"><BadgePercent aria-hidden="true" />Mulai jual</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className={styles.item}>
               <Link href="/pengaturan-profil"><Settings aria-hidden="true" />Pengaturan Profil</Link>
