@@ -24,7 +24,7 @@ const chapters = [
     number: "02", label: "Tokomu", title: "Bikin sekali.\nJual berkali-kali.",
     description: "Mulai dari file yang sudah kamu punya. Upload karyamu, tambahkan cerita di baliknya, lalu tentukan harga. Laksa menyiapkan tempat untuk menjualnya.",
     caption: "LANGKAH KECIL UNTUK MULAI", items: ["Lengkapi profil penjualmu", "Upload file dan cover produk", "Atur harga, lalu publish"],
-    link: "/mulai-jual", action: "Mulai jual karyamu", theme: "lilac",
+    link: "/seller/dashboard/home", action: "Mulai jual karyamu", theme: "lilac",
     artwork: "/assets/landing/tokomu.webp",
   },
   {
@@ -119,13 +119,13 @@ export default function LandingPage() {
         <section className={styles.closing} aria-labelledby="closing-title">
           <div className={styles.sectionTop}></div>
           <h2 id="closing-title">Jangan berhenti<br />di folder laptop.</h2>
-          <div className={styles.closingBottom}><Link href="/mulai-jual">Mulai jual di Laksa <ArrowUpRight size={30} aria-hidden="true" /></Link></div>
+          <div className={styles.closingBottom}><Link href="/seller/dashboard/home">Mulai jual di Laksa <ArrowUpRight size={30} aria-hidden="true" /></Link></div>
         </section>
       </main>
 
       <footer className={styles.footer}>
         <div className={styles.footerTop}><Link href="/landing" className={styles.footerLogo} aria-label="Laksa — kembali ke beranda">Laksa</Link><p>Sebuah ruang untuk<br />segala kemungkinan.</p><a href="#landing-top" aria-label="Kembali ke atas"><ArrowUpRight size={34} aria-hidden="true" /></a></div>
-        <div className={styles.footerBottom}><span>© 2026 LAKSA</span><span>DARI KREATOR, UNTUK KREATOR.</span><div><Link href="/jelajah">Jelajahi produk</Link><Link href="/mulai-jual">Mulai jual</Link></div></div>
+        <div className={styles.footerBottom}><span>© 2026 LAKSA</span><span>DARI KREATOR, UNTUK KREATOR.</span><div><Link href="/jelajah">Jelajahi produk</Link><Link href="/seller/dashboard/home">Mulai jual</Link></div></div>
       </footer>
     </div>
   );

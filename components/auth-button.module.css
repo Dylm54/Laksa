@@ -16,7 +16,7 @@
 .item[data-slot="dropdown-menu-item"] { display: flex; align-items: center; gap: 13px; width: 100%; min-height: 47px; padding: 12px 20px; border: 0; border-radius: 0; background: transparent; color: #111110; font-size: 14px; font-weight: 400; letter-spacing: -.02em; line-height: 1.4; text-align: left; text-decoration: none; cursor: pointer; }
 .item[data-highlighted], .item:focus-visible { outline: none; background: #d1ddd3; color: #111110; }
 .item svg { width: 17px; height: 17px; stroke-width: 1.5; }
-.separator[data-slot="dropdown-menu-separator"] { margin: 8px 0 0; height: 1px; background: #111110; opacity: .18; }
+.separator[data-slot="dropdown-menu-separator"] { margin: 8px 0 0; height: 1px; background: #111110; }
 .logout[data-slot="dropdown-menu-item"] { min-height: 53px; }
 .logout[data-highlighted], .signup[data-slot="dropdown-menu-item"] { color: #111110; }
 .signup[data-highlighted] { background: #d1ddd3; }

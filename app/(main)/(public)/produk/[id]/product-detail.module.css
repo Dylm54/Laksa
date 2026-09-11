@@ -20,7 +20,7 @@
 .back a:hover { text-decoration: underline; text-underline-offset: 5px; }
 .back svg { width: 18px; height: 18px; stroke-width: 1.5; }
 .productGrid { display: grid; grid-template-columns: minmax(0, 56fr) minmax(0, 44fr); border: 1px solid var(--ink); }
-.artwork { min-width: 0; display: flex; flex-direction: column; border-right: 1px solid var(--ink); background: var(--sage); }
+.artwork { min-width: 0; display: flex; flex-direction: column; border-right: 1px solid var(--ink); }
 .cover { position: relative; aspect-ratio: 4 / 3; width: 100%; }
 .coverImage { object-fit: contain; }
 .caption { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; margin-top: auto; border-top: 1px solid var(--ink); }
